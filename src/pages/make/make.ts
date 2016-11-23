@@ -18,25 +18,32 @@ export class MakePage {
   public lmao = "Hey.";
 
   public move = {
-    name: "",
-    capacity: 30,
-    hasAlcohol: false,
-    extraInfo: "",
+    info: {
+      name: "",
+      capacity: 30,
+      hasAlcohol: false,
+      extraInfo: ""
+    },
     
-    long: 0,
-    lat: 0,
-    people: 1
+    location: {
+      long: 0,
+      lat: 0
+    },
+
+    stats: {
+      people: 1
+    }
   }
 
  logForm() {
-    if (this.move.name == "") {
+    if (this.move.info.name == "") {
       this.myWarning("You need to give your Move a name.", 3000);
-    } else if (this.move.capacity < this.config.min) {
+    } else if (this.move.info.capacity < this.config.min) {
       this.myWarning("The minimum capacity is " + this.config.min + " people.", 3000);
-      this.move.capacity = this.config.min;
-    } else if (this.move.capacity > this.config.max) {
-      this.myWarning("The maximum capacity is " + this.config.min + " people.", 3000);
-      this.move.capacity = this.config.max;     
+      this.move.info.capacity = this.config.min;
+    } else if (this.move.info.capacity > this.config.max) {
+      this.myWarning("The maximum capacity is " + this.config.max + " people.", 3000);
+      this.move.info.capacity = this.config.max;     
     } else {
       console.log("Move creation success. Sending out object data for database storage.");
       console.log(this.move);
