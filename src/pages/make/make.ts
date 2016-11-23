@@ -37,7 +37,6 @@ export class MakePage {
     } else if (this.move.capacity > this.config.max) {
       this.myWarning("The maximum capacity is " + this.config.min + " people.", 3000);
       this.move.capacity = this.config.max;     
-    }
     } else {
       console.log(this.move);
     }
