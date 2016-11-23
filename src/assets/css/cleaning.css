@@ -1,0 +1,12 @@
+.space { 
+	margin-top: 150px; 
+}
+
+.minispace { 
+	margin-top: 50px; 
+}
+
+.center {
+	margin: auto;
+	width:150px;
+}
