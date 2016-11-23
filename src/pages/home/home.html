@@ -5,4 +5,13 @@
 </ion-header>
 <ion-content padding>
 
+	<button (click)="listMoves()">Click here for moves</button>
+
+	<ion-list>
+		<ion-item *ngFor="let move of moves">
+			<h2>{{move.name}}</h2>
+			<p class="item-description">{{move.description}}</p>
+		</ion-item>
+	</ion-list>
+
 </ion-content>

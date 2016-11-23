@@ -52,9 +52,9 @@ app.route('/')
 			if (err) return console.log(err);
 			console.log('[+] Moves fetched');
 			console.log(moves);
-			//res.json(moves);
+			res.json(moves);
 		})
-		res.sendFile(__dirname + '/index.html');
+		//res.sendFile(__dirname + '/index.html');
 	})
 	
 	.post((req, res) => {
