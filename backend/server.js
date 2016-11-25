@@ -17,6 +17,7 @@ app.use(bodyParser.json())
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   next();
 });
 
@@ -88,8 +89,8 @@ app.route('/moves/:id')
 	})
 	// DELETE move
 	.delete((req, res) => {
-		db.collection('moves').findOneAndDelete({id: req.body.name}, (err, result) => {
-			if (err) return res.send(500, err)
-			res.send(results)
+		Move.findByIdAndRemove(req.params.id, (err) => {
+			if (err) return res.send(500, err);
+			console.log('Move deleted');
 		})
 	})

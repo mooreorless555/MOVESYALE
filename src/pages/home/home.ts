@@ -15,7 +15,7 @@ export class HomePage {
   moves: Array<any>;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, private movesService: MovesService) {
-
+    this.listMoves();
   }
 
   presentToast() {
@@ -37,6 +37,15 @@ export class HomePage {
       },
       () => console.log('Got Moves')
     );
+  }
+
+  deleteMove(move) {
+    this.movesService.deleteMove(move).subscribe(
+      err => {
+        console.log(err);
+      }
+    )
+    this.listMoves();
   }
   
 
