@@ -11,6 +11,7 @@ var Move = require('./models/move.js');
 
 // Middleware
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 // Handles any CORS errors
 app.use(function(req, res, next) {
@@ -23,7 +24,7 @@ app.use(function(req, res, next) {
 mongoose.Promise = global.Promise;
 
 // Connect to MongoDB
-mongoose.connect('mongodb://' + config.db.username + ':' + config.db.password + '@ds159497.mlab.com:59497/movespractice', (err) => {
+mongoose.connect('mongodb://' + config.db.username + ':' + config.db.password + '@ds111178.mlab.com:11178/movesapp', (err) => {
 	if (err) return console.log(err);
 	console.log('[+] Connection Successful')
 
@@ -58,13 +59,15 @@ app.route('/')
 	})
 	
 	.post((req, res) => {
+		//console.log(req)
 		console.log(req.body)
+		console.log(req.body.name)
 		Move.create(req.body, (err, post) => {
 			if (err) return console.log(err);
 			console.log('[+] Move created');
 			console.log(post);
 			res.json(post);
-			res.redirect('/');
+			//res.redirect('/');
 		})
 	})
 

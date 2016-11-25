@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
 
 var MoveSchema = new mongoose.Schema({
-	name: String,
-	description: String,
-	location: { lat: Number, lon: Number },
+	info: {
+		name:String,
+		capacity: Number,
+		hasAlcohol: Boolean,
+		extraInfo: String
+	},
+	location: { 
+		long: Number, 
+		lat: Number 
+	},
+	stats: {
+		people: Number
+	},
 	updated_at: { type: Date, default: Date.now }
 });
 

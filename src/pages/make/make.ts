@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-
 import { ToastController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
+import { MovesService } from '../services/MovesService';
 
 @Component({
   selector: 'page-make',
-  templateUrl: 'make.html'
+  templateUrl: 'make.html',
+  providers:[MovesService]
 })
 export class MakePage {
 	public hello;
@@ -35,7 +36,7 @@ export class MakePage {
     }
   }
 
- logForm() {
+  logForm() {
     if (this.move.info.name == "") {
       this.myWarning("You need to give your Move a name.", 3000);
     } else if (this.move.info.capacity < this.config.min) {
@@ -45,6 +46,7 @@ export class MakePage {
       this.myWarning("The maximum capacity is " + this.config.max + " people.", 3000);
       this.move.info.capacity = this.config.max;     
     } else {
+      this.saveMove(this.move);
       console.log("Move creation success. Sending out object data for database storage.");
       console.log(this.move);
     }
@@ -53,7 +55,7 @@ export class MakePage {
 
 
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, private movesService: MovesService) {
   	let messages = [
   	"What's going on?", 
   	"What's the move?", 
@@ -86,6 +88,19 @@ export class MakePage {
       });
       warn.present();
 
+    }
+
+    saveMove(move) {
+      this.movesService.makeMove(move).subscribe(
+        data => {
+          //this.moves = data;
+          console.log(move);
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log('Got Moves')
+      );
     }
 
 }
