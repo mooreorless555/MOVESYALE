@@ -33,4 +33,14 @@ export class MovesService {
     var response = this.http.post(url, body, options).map(res => res.json());
     return response;
   }
+
+  deleteMove(move) {
+    console.log('Deleting move');
+    console.log(move);
+    let url = 'http://localhost:3000' + '/moves/' + move._id;
+    var response = this.http.delete(url).map(res => res.json());
+    return response;
+
+    //this.getMoves();
+  }
 }
