@@ -5,12 +5,20 @@
 </ion-header>
 <ion-content padding>
 
-	<button (click)="listMoves()">Click here for moves</button>
 
+  <ion-refresher (ionRefresh)="refreshMoves($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText=""
+      refreshingSpinner="circles"
+      refreshingText="">
+    </ion-refresher-content>
+  </ion-refresher>
 	<ion-list>
-		<ion-item *ngFor="let move of moves">
+		<ion-item class="animated fadeInUp" *ngFor="let move of moves" (click)="checkStats(move)">
+		<ion-avatar item-right>{{move.info.capacity}}</ion-avatar>
 			<h2>{{move.info.name}}</h2>
-			<p class="item-description">{{move.info.extraInfo}}</p>
+			<p class="item-description animated fadeInLeft">{{move.info.extraInfo}}</p>
 		</ion-item>
 	</ion-list>
 

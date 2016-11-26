@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
+
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
+
+import { StatsPage } from '../stats/stats';
+
 import { MovesService } from '../services/MovesService';
 
 
@@ -25,7 +29,16 @@ export class HomePage {
     });
     toast.present();
   }
-  
+
+  refreshMoves(refresher) {
+        setTimeout(() => {
+      console.log('Async operation has ended');
+        this.listMoves();
+        refresher.complete();
+    }, 1000);
+
+  }
+
   listMoves() {
     this.movesService.getMoves().subscribe(
       data => {
@@ -37,6 +50,12 @@ export class HomePage {
       },
       () => console.log('Got Moves')
     );
+  }
+
+  checkStats(move) {
+    this.navCtrl.push(StatsPage, { 
+      firstPassed: move}
+      );
   }
   
 
