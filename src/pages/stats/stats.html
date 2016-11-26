@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color='navbar'>
+    <ion-title>
+      Stats
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<div class="animated fadeInLeft">
+<h1>{{move.info.name}}</h1>
+<p item-description>{{move.info.extraInfo}}</p>
+</div>
+<hr>
+<div class="animated fadeInLeft">
+<h4>People:</h4>
+<p item-description>{{move.stats.people}} / {{move.info.capacity}}</p>
+<h4>Alcohol Status</h4>
+<p item-description>{{alcStatus}}</p>
+</div>
+</ion-content>
