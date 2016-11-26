@@ -15,10 +15,11 @@
     </ion-refresher-content>
   </ion-refresher>
 	<ion-list>
-		<ion-item class="animated fadeInUp" *ngFor="let move of moves" (click)="checkStats(move)">
+		<ion-item class="animated fadeInUp" *ngFor="let move of moves">
 		<ion-avatar item-right>{{move.info.capacity}}</ion-avatar>
-			<h2>{{move.info.name}}</h2>
+			<h2 (click)="checkStats(move)">{{move.info.name}}</h2>
 			<p class="item-description animated fadeInLeft">{{move.info.extraInfo}}</p>
+			<ion-icon name="close-circle" (click)="deleteMove(move)"></ion-icon>
 		</ion-item>
 	</ion-list>
 
