@@ -15,6 +15,11 @@ export class HomePage {
   moves: Array<any>;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, private movesService: MovesService) {
+    //this.listMoves();
+  }
+
+  ionViewWillEnter() {
+    console.log('onPageWillEnter');
     this.listMoves();
   }
 
@@ -44,8 +49,9 @@ export class HomePage {
       err => {
         console.log(err);
       }
-    )
-    this.listMoves();
+    );
+
+    this.moves.splice(this.moves.indexOf(move), 1);
   }
   
 
