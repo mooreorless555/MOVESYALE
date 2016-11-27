@@ -1,3 +1,8 @@
 page-home {
 
+	.animIn.ng-enter {
+	  -webkit-animation: fadeInLeft 9s;
+      animation: fadeInLeft 9s;
+	}
+
 }

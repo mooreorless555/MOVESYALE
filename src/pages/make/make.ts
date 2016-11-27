@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
+
+import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
+
+import { HomePage } from '../home/home';
+
 import { MovesService } from '../services/MovesService';
 
 @Component({
@@ -8,6 +13,7 @@ import { MovesService } from '../services/MovesService';
   templateUrl: 'make.html',
   providers:[MovesService]
 })
+
 export class MakePage {
 	public hello;
   public config = {
@@ -16,8 +22,7 @@ export class MakePage {
     displayMsg: false
   };
 
-  public lmao = "Hey.";
-
+  // Move Object
   public move = {
     info: {
       name: "",
@@ -36,6 +41,7 @@ export class MakePage {
     }
   }
 
+ // Form submission checking
   logForm() {
     if (this.move.info.name == "") {
       this.myWarning("You need to give your Move a name.", 3000);
@@ -46,6 +52,7 @@ export class MakePage {
       this.myWarning("The maximum capacity is " + this.config.max + " people.", 3000);
       this.move.info.capacity = this.config.max;     
     } else {
+      this.confirmMove();
       this.saveMove(this.move);
       console.log("Move creation success. Sending out object data for database storage.");
       console.log(this.move);
@@ -55,17 +62,38 @@ export class MakePage {
 
 
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, private movesService: MovesService) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, private movesService: MovesService) {
   	let messages = [
-  	"What's going on?", 
-  	"What's the move?", 
-  	"This'll be fun.",
-  	"What you got for us?"
+    	"Please enter Move here.", 
+    	"What's the move?", 
+    	"This'll be fun.",
+    	"What you got for us?"
     ];
 
   	this.hello = messages[Math.floor(Math.random() * messages.length)];
 
   }
+
+    confirmMove() {
+      let confirm = this.alertCtrl.create({
+            message: '"' + this.move.info.name + '" will go live at your current location. Do you confirm this?',
+    buttons: [
+      {
+        text: 'Wait, go back',
+        role: 'cancel',
+        handler: data => {
+          console.log('Cancel clicked');
+        }},
+        {
+        text: 'GO LIVE!',
+        handler: data => {
+          this.myWarning("Your move is now on the map. Check it out!", 1000);
+          this.navCtrl.push(HomePage);
+          console.log('Confirmed.');
+        }}]
+        });
+          confirm.present();
+        }
 
     alcWarning() {
      let warning = this.toastCtrl.create({

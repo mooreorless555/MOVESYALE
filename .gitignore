@@ -29,6 +29,7 @@ plugins/ios.json
 www/
 $RECYCLE.BIN/
 config.json
+backend/config.json
 
 .DS_Store
 Thumbs.db
