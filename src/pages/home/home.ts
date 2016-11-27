@@ -58,7 +58,6 @@ export class HomePage {
   }
 
   deleteMove(move) {
-<<<<<<< HEAD
     this.movesService.deleteMove(move).subscribe(
       err => {
         console.log(err);
@@ -66,21 +65,11 @@ export class HomePage {
     );
 
     this.moves.splice(this.moves.indexOf(move), 1);
-=======
-  this.movesService.deleteMove(move).subscribe(
-    err => {
-      console.log(err);
-    }
-  )
-  this.listMoves();
-}
+  }
 
   checkStats(move) {
     this.navCtrl.push(StatsPage, { 
       firstPassed: move}
       );
->>>>>>> f8041fcae264298785670f1cf6e7bf42214d7dcf
   }
-  
-
 }
