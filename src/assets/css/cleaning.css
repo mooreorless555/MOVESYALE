@@ -6,7 +6,13 @@
 	margin-top: 50px; 
 }
 
-.center {
+.centerme {
 	margin: auto;
 	width:150px;
+}
+
+#container {
+  margin: auto;
+  width: 90px;
+  height: 90px;
 }

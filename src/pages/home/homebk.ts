@@ -1,4 +1,5 @@
-import { Component, ViewChildren } from '@angular/core';
+import { Component, ElementRef, ViewChildren } from '@angular/core';
+// import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
@@ -16,19 +17,25 @@ declare var ProgressBar: any;
   providers: [MovesService]
 })
 
+// @NgModule({
+//   imports: [RoundProgressModule]
+// })
+
 export class HomePage {
 
  @ViewChildren('container') container: any;
   moves: Array<any>;
   stuff: any;
+  conty: any;
 
 
   ngAfterViewInit() {
     this.listMoves();
   }
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, private movesService: MovesService) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public elementRef: ElementRef, private movesService: MovesService) {
 
+  // this.stuff = this.container + "stuff";
   }
 
   presentToast() {
@@ -41,7 +48,7 @@ export class HomePage {
 
   refreshMoves(refresher) {
         setTimeout(() => {
-        console.log('Async operation has ended');
+      console.log('Async operation has ended');
         this.listMoves();
         refresher.complete();
     }, 1000);
@@ -60,7 +67,8 @@ export class HomePage {
       () => console.log('Got Moves')
     );
     
-    this.createProgBars(this.container.toArray());   
+
+  this.createProgBars(this.container.toArray());   
   }
 
   deleteMove(move) {
@@ -80,7 +88,6 @@ export class HomePage {
   
 
   createProgBars(moves) {
-    console.log("Making bars.");
     for (var i = 0; i < moves.length; i++) {
       var progbar = new ProgressBar.SemiCircle(moves[i].nativeElement, {
         strokeWidth: 18,
@@ -106,7 +113,6 @@ export class HomePage {
         });
       progbar.animate(1-(i*0.27));
     }
-     console.log("Bars made.");
   }
 
 }

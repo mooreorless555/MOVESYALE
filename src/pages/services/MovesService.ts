@@ -8,7 +8,7 @@ var url = 'http://localhost:3000/';
 export class MovesService {
 
   static get parameters() {
-  	return [[Http]];
+    return [[Http]];
   }
 
   constructor(public http: Http) {
@@ -17,8 +17,8 @@ export class MovesService {
 
   getMoves() {
     console.log('Getting Moves');
-  	var response = this.http.get(url).map(res => res.json());
-  	return response;
+    var response = this.http.get(url).map(res => res.json());
+    return response;
   }
 
   makeMove(move) {
