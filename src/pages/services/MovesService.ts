@@ -39,8 +39,7 @@ export class MovesService {
     console.log(move);
     let url = 'http://localhost:3000' + '/moves/' + move._id;
     var response = this.http.delete(url).map(res => res.json());
+    this.getMoves();
     return response;
-
-    //this.getMoves();
   }
 }

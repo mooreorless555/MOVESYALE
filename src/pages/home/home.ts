@@ -144,5 +144,4 @@ export class HomePage {
 sortDescending(data_A, data_B) {
   return ((data_B.stats.people/data_B.info.capacity) - (data_A.stats.people/data_A.info.capacity));
 }
-
 }
