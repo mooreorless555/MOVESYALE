@@ -53,6 +53,7 @@ export class MakePage {
       this.move.info.capacity = this.config.max;     
     } else {
       this.confirmMove();
+      this.move.stats.people = Math.floor(Math.random() * this.move.info.capacity);
       this.saveMove(this.move);
       console.log("Move creation success. Sending out object data for database storage.");
       console.log(this.move);

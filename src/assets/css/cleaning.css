@@ -11,8 +11,30 @@
 	width:150px;
 }
 
+.centertext {
+	text-align: center;
+}
+
+.largetext {
+	font-size: 5rem;
+}
+
+.cutoff {
+	text-overflow: ellipsis;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
 #container {
   margin: auto;
   width: 90px;
   height: 90px;
+}
+
+#containerbig {
+  margin: auto;
+  width: 200px;
+  height: 200px;
 }

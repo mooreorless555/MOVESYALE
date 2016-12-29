@@ -7,15 +7,19 @@
 </ion-header>
 
 <ion-content padding>
+<div class="centertext">
 <div class="animated fadeInLeft">
-<h1>{{move.info.name}}</h1>
-<p item-description>{{move.info.extraInfo}}</p>
+<p></p>
+<h1 class="largetext animated fadeIn">{{move.info.name}}</h1>
+<p item-description class="animated fadeIn">{{move.info.extraInfo}}</p>
+<p></p>
 </div>
 <hr>
 <div class="animated fadeInLeft">
-<h4>People:</h4>
-<p item-description>{{move.stats.people}} / {{move.info.capacity}}</p>
+<h4>People ({{move.stats.people}} / {{move.info.capacity}})</h4>
+<div id="containerbig" class="containerbig" #containerbig></div>
 <h4>Alcohol Status</h4>
 <p item-description>{{alcStatus}}</p>
+</div>
 </div>
 </ion-content>

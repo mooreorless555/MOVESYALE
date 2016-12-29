@@ -30,6 +30,7 @@ www/
 $RECYCLE.BIN/
 config.json
 backend/config.json
+backend/
 
 .DS_Store
 Thumbs.db

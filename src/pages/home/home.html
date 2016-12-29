@@ -4,8 +4,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-
-  <div class="progress" id="progress"></div>
   <ion-refresher (ionRefresh)="refreshMoves($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -15,16 +13,16 @@
     </ion-refresher-content>
   </ion-refresher>
 	<ion-list>
-		<ion-item no-lines class="animated fadeInUp" *ngFor="let move of moves">
-		<ion-avatar item-right>{{move.info.capacity}}</ion-avatar>
-			<h2 (click)="checkStats(move)">{{move.info.name}}</h2>
+		<ion-item no-lines class="animated fadeInUp" *ngFor="let move of moves" (click)="checkStats(move)" (press)="deleteMove(move)">
+    <ion-icon item-right id="container" class="container" #container></ion-icon>
+			<h1 (swipe)="checkStats(move)" (press)="presentToast('Sup', 3000)" class="cutoff">{{move.info.name}}</h1>
 			<p class="item-description animated fadeInLeft">{{move.info.extraInfo}}</p>
-			<ion-icon name="close-circle" (click)="deleteMove(move)"></ion-icon>
+      <p><i>Hosted by _____</i></p>
 		</ion-item>
 	</ion-list>
 <!-- <round-progress [current]="current" [max]="max"></round-progress> -->
 
-  <ion-list>
+<!--   <ion-list>
     <ion-item no-lines class="animated fadeInUp">
     <ion-icon item-right class="container" id="container" #container></ion-icon>
       <h2>ZETA</h2>
@@ -44,6 +42,6 @@
       <h2>Cookies N' Cream</h2>
       <p class="item-description animated fadeInLeft">Free cookies in SSS!</p>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
 </ion-content>

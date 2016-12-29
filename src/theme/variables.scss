@@ -32,12 +32,40 @@ $colors: (
   facebook:   #3B5998
 );
 
+@font-face {
+font-family: AppFont;
+src: url("../assets/fonts/DINPro.otf");
+}
+
+@font-face {
+font-family: MoveDesc;
+src: url("../assets/fonts/DINPro-Light.otf");
+}
+
+@font-face {
+font-family: MoveHeader;
+src: url("../assets/fonts/DINPro-BlackItalic.otf");
+}
+
+
+body, span, button, h2, h3, h4, h5, h6 {
+font-family: 'AppFont' !important;
+}
+
+p {
+font-family: 'MoveDesc' !important;
+}
+
+h1 {
+	font-family: 'MoveHeader' !important;
+}
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
+@import url('https://fonts.googleapis.com/css?family=Oxygen');
+$font-family-base: 'Oxygen', sans-serif !default;
 
 
 // App Material Design Variables
@@ -46,11 +74,9 @@ $colors: (
 
 
 
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
 
 
 

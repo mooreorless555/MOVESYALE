@@ -52,7 +52,7 @@ presentPrompt() {
         text: 'Send Confirmation',
         handler: data => {
           this.firsttime.email = data.email;
-          if (data.email.endsWith("")) {
+          if (data.email.endsWith("")) { // Change this back to @yale.edu to filter out Yale emails.
             if (data.email == "@yale.edu") {
               this.presentError("This isn't an email.");
               return false;
@@ -106,8 +106,9 @@ alert.present();
 }
 
 presentError(msg) {
+  let msgs = ['Oops', 'Try Again', 'Uh-oh'];
   let alert = this.alertCtrl.create({
-    title: 'Oops',
+    title: msgs[Math.floor(Math.random() * msgs.length)],
     message: msg,
     buttons: ['Go Back']
   });
