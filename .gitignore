@@ -35,3 +35,5 @@ backend/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+backend/models/move.js
+backend/README.md
