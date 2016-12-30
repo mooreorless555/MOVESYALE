@@ -6,23 +6,20 @@ import { NavController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 
+import { System, Globals } from '../functions/functions';
 import { MovesService } from '../services/MovesService';
 
 @Component({
   selector: 'page-make',
   templateUrl: 'make.html',
-  providers:[MovesService]
+  providers:[MovesService, System, Globals]
 })
 
 export class MakePage {
 	public hello;
-  public config = {
-    min: 30,
-    max: 300,
-    displayMsg: false
-  };
 
-  // Move Object
+
+  /* Move Object */
   public move = {
     info: {
       name: "",
@@ -41,29 +38,50 @@ export class MakePage {
     }
   }
 
- // Form submission checking
+ /* Form submission checking */
   logForm() {
+    this.move.info.name = this.move.info.name.trim();
+    console.log(this.move.info.name);
     if (this.move.info.name == "") {
-      this.myWarning("You need to give your Move a name.", 3000);
-    } else if (this.move.info.capacity < this.config.min) {
-      this.myWarning("The minimum capacity is " + this.config.min + " people.", 3000);
-      this.move.info.capacity = this.config.min;
-    } else if (this.move.info.capacity > this.config.max) {
-      this.myWarning("The maximum capacity is " + this.config.max + " people.", 3000);
-      this.move.info.capacity = this.config.max;     
+      this.system.showNotification("You need to give your Move a name.", 3000);
+    } else if (this.allspaces(this.move.info.name)) {
+      this.system.showNotification("This is an invalid name.", 3000);
+    } else if (this.move.info.name.length < 3) {
+      this.system.showNotification("The name needs to be at least 3 characters long.", 3000);
+    } else if (this.move.info.capacity < this.globals.config.min) {
+      this.system.showNotification("The minimum capacity is " + this.globals.config.min + " people.", 3000);
+      this.move.info.capacity = this.globals.config.min;
+    } else if (this.move.info.capacity > this.globals.config.max) {
+      this.system.showNotification("The maximum capacity is " + this.globals.config.max + " people.", 3000);
+      this.move.info.capacity = this.globals.config.max;     
     } else {
       this.confirmMove();
-      this.move.stats.people = Math.floor(Math.random() * this.move.info.capacity);
-      this.saveMove(this.move);
-      console.log("Move creation success. Sending out object data for database storage.");
       console.log(this.move);
     }
+  }
+
+  allspaces(string) {
+    var numspace = 0;
+    for (var i = 0; i < string.length; i++) {
+      if (string[i] == ' ' || string[i] == '.') {
+        numspace++;
+      }
+    }
+
+    if (numspace == string.length) return true;
+    return false;
+  }
+
+  resetFields(move) {
+    move.info.name = '';
+    move.info.hasAlcohol = false;
+    move.info.extraInfo = '';
   }
 
 
 
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, private movesService: MovesService) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, private system: System, private globals: Globals, private movesService: MovesService) {
   	let messages = [
     	"Please enter Move here.", 
     	"What's the move?", 
@@ -88,9 +106,17 @@ export class MakePage {
         {
         text: 'GO LIVE!',
         handler: data => {
-          this.myWarning("Your move is now on the map. Check it out!", 1000);
-          this.navCtrl.push(HomePage);
-          console.log('Confirmed.');
+          this.move.stats.people = Math.floor(Math.random() * this.move.info.capacity);
+          this.saveMove(this.move);
+          this.system.startLoading("Adding your move to the map.", 1000);
+          setTimeout(() => {
+            this.system.showNotification("Your move is now on the map. Check it out!", 1000);
+            this.navCtrl.push(HomePage);
+            console.log('Confirmed.');
+            console.log("Move creation success. Sending out object data for database storage."); 
+            this.resetFields(this.move);           
+          }, 1000);
+
         }}]
         });
           confirm.present();
@@ -102,22 +128,11 @@ export class MakePage {
       duration: 5000
     });
 
-     this.config.displayMsg = !(this.config.displayMsg);
-     if (this.config.displayMsg) {
+     this.globals.config.displayMsg = !(this.globals.config.displayMsg);
+     if (this.globals.config.displayMsg) {
        warning.present();
      }
    }
-
-
-
-    myWarning(msg, sec) {
-      let warn = this.toastCtrl.create({
-        message: msg,
-        duration: sec
-      });
-      warn.present();
-
-    }
 
     saveMove(move) {
       this.movesService.makeMove(move).subscribe(

@@ -13,8 +13,9 @@ declare var ProgressBar: any;
 
 export class StatsPage {
 	@ViewChild('containerbig') container;
-	public move:any;
-	public alcStatus = "No.";
+	move:any;
+  percentage:any;
+	alcStatus = "No.";
 
 	ngAfterViewInit() {
 		this.createProgBar(this.container, this.move);
