@@ -39,8 +39,7 @@ export class HomePage {
     }
     }
 
-  constructor(public navCtrl: NavController, private system: System) {
-
+  constructor(public navCtrl: NavController, public system: System) {
   }
 
   /* Refresh list of moves event. */
@@ -48,7 +47,9 @@ export class HomePage {
         this.system.showNotification('Updating list, standby...', 1000);
         setTimeout(() => {
           this.system.checked = 0;  
-          this.system.listMoves();  
+          this.system.listMoves();
+          this.system.currentdate = this.system.showDate();
+          this.system.currentday = this.system.showDay();  
           this.system.showNotification('Done!', 1000);
           refresher.complete();
     }, 1000);

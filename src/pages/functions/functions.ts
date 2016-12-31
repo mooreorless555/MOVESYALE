@@ -11,7 +11,10 @@ declare var ProgressBar: any;
 export class System {
 
 	public checked = 0;
-	public moves: Array<any>;
+	public moves = [];
+
+	public currentdate = this.showDate();
+	public currentday = this.showDay();
 
 	constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private movesService: MovesService) {
 
@@ -27,7 +30,8 @@ showNotification(msg, duration) {
 
 startLoading(msg, duration) {
 	let loader = this.loadingCtrl.create({
-	  content: msg,
+	  spinner: 'hide',
+	  content: '<div class="centertext centerme"><img class="custom-spinner" src="assets/img/test_stroke_animated.svg"/><br>' + msg + '</div>',
 	  duration: duration
 	});
 	loader.present();
@@ -105,7 +109,7 @@ createProgBars(moves_containers, moves) {
           if (moves.length) {
              var value = moves[i].stats.people/moves[i].info.capacity;
              if (value > 1) value = 1;
-             progbar.animate(moves[i].stats.people/moves[i].info.capacity);
+             progbar.animate(value);
           }
         }
   }
@@ -114,7 +118,52 @@ createProgBars(moves_containers, moves) {
     return ((data_B.stats.people/data_B.info.capacity) - (data_A.stats.people/data_A.info.capacity));
   }
 
+  showDay() {
+  	var d = new Date();  
+  	var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+	var message = days[d.getDay()] + " " + this.getTimeOfDay()
+	return message;
   }
+
+  showDate() {
+  	var d = new Date();
+  	var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  	var message = months[d.getMonth()] + " " + this.getDateRight() + ", " + d.getFullYear();
+  	return message;
+  }
+
+  getDateRight() {
+  	var d = new Date();
+  	var date = d.getDate().toString();
+  	var result;
+  	if (date.endsWith('1')) {
+  		result = date + "st";
+  	} else if (date.endsWith('2')) {
+  		result = date + "nd";
+  	} else if (date.endsWith('3')) {
+  		result = date + "rd";
+  	} else {
+  		result = date + "th";
+  	}
+  	return result;
+  }
+
+  getTimeOfDay() {
+  	var d = new Date();
+  	var time = d.getHours();
+  	var result;
+  	if (time >= 0 && time < 12) {
+  		result = "morning";
+  	} else if (time >= 12 && time < 18) {
+  		result = "afternoon";
+  	} else if (time >= 18 && time < 21) {
+  		result = "evening";
+  	} else {
+  		result = "night";
+  	}
+  	return result;
+  }
+}
 
 
   @Injectable()

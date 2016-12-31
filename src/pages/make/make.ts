@@ -81,7 +81,7 @@ export class MakePage {
 
 
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, private system: System, private globals: Globals, private movesService: MovesService) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, public system: System, private globals: Globals, private movesService: MovesService) {
   	let messages = [
     	"Please enter Move here.", 
     	"What's the move?", 

@@ -19,6 +19,16 @@
 	font-size: 5rem;
 }
 
+.mediumtext {
+	font-size: 3rem;
+/*	font-family: 'AppFont' !important;*/
+}
+
+.custom-spinner {
+  width: auto;
+  height: 80px !important;
+}
+
 .cutoff {
 	text-overflow: ellipsis;
 	width: 200px;
@@ -26,6 +36,14 @@
 	overflow: hidden;
 }
 
+.nomoves {
+	margin: auto;
+	width: 80%;
+}
+
+.lessmargin {
+	margin-bottom: -20px;
+}
 
 #container {
   margin: auto;
@@ -36,5 +54,16 @@
 #containerbig {
   margin: auto;
   width: 200px;
-  height: 200px;
+  height: 100px;
+}
+
+.path {
+  stroke-dasharray: 400;
+  animation: dash 5s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 800;
+  }
 }

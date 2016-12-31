@@ -16,6 +16,7 @@ export class StatsPage {
 	move:any;
   percentage:any;
 	alcStatus = "No.";
+  numppl = 0;
 
 	ngAfterViewInit() {
 		this.createProgBar(this.container, this.move);
@@ -26,6 +27,7 @@ export class StatsPage {
  		if (this.move.info.hasAlcohol) {
  			this.alcStatus = "Yes.";
  		}
+     this.percentage = (100*(this.move.stats.people/this.move.info.capacity)).toFixed(2);
   }
 
   
@@ -48,19 +50,29 @@ export class StatsPage {
 
           step: (state, bar) => {
             bar.path.setAttribute('stroke', state.color);
-			var value = Math.round(bar.value() * move.info.capacity);
-			    if (value === 0) {
-			      bar.setText('');
-			    } else {
-			      bar.setText('');
-			    }
+			this.numppl = Math.round(bar.value() * move.info.capacity);
+			    // if (value === 0) {
+			    //   bar.setText('');
+			    // } else {
+			      bar.setText(this.numppl + '/' + move.info.capacity);
+			    // }
 
           }
           });
 
-		progbar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+		progbar.text.style.fontFamily = 'AppFont';
 		progbar.text.style.fontSize = '2rem';	
-	    progbar.animate(move.stats.people/move.info.capacity);
+
+    var perc = move.stats.people/move.info.capacity;
+
+    if (perc > 1) {
+      progbar.animate(1);
+    } else if (perc >= 0) {
+      progbar.animate(perc);     
+    } else {
+      progbar.animate(0);
+    }
+
   }
 
 }
