@@ -13,6 +13,8 @@ export class System {
 	public checked = 0;
 	public moves = [];
 
+  public progbars = new Array();
+
 	public currentdate = this.showDate();
 	public currentday = this.showDay();
 
@@ -85,6 +87,12 @@ deleteMove(move) {
   }
 
 createProgBars(moves_containers, moves) {
+  console.log("Hi there");
+  if (this.progbars[0]) {
+    console.log("Emptying progbars.")
+    this.progbars = [];
+    console.log(this.progbars);
+  }
     for (var i = 0; i < moves_containers.length; i++) {
         console.log("Executing createProgbars...");
         var progbar = new ProgressBar.SemiCircle(moves_containers[i].nativeElement, {
@@ -106,12 +114,25 @@ createProgBars(moves_containers, moves) {
             bar.path.setAttribute('stroke', state.color);
           }
           });
-          if (moves.length) {
-             var value = moves[i].stats.people/moves[i].info.capacity;
-             if (value > 1) value = 1;
-             progbar.animate(value);
-          }
+          this.progbars.push(progbar);
+          // if (moves.length) {
+          //    var value = moves[i].stats.people/moves[i].info.capacity;
+          //    if (value > 1) value = 1;
+          //    progbar.animate(value);
+          // }
         }
+        console.log("Progbars",this.progbars);
+  }
+
+  updateProgbars() {
+    console.log("Let's update.");
+    if (this.moves[0]) {
+      for (var i = 0; i < this.moves.length; i++) {
+       var value = this.moves[i].stats.people/this.moves[i].info.capacity;
+       if (value > 1) value = 1;
+       this.progbars[i].animate(value);        
+      }
+    }
   }
 
   sortDescending(data_A, data_B) {
@@ -163,8 +184,8 @@ createProgBars(moves_containers, moves) {
   	}
   	return result;
   }
-}
 
+}
 
   @Injectable()
   export class Globals {
@@ -174,4 +195,8 @@ createProgBars(moves_containers, moves) {
 	    max: 10000,
 	    displayMsg: false
 	  };
+
+    // public rooms = {
+    //   landing.
+    // }
   }

@@ -18,6 +18,11 @@
   <h4>on</h4>
   <h4>{{ this.system.currentdate }}</h4>
   </div>
+<!--   <button (click)='start()'>Start Tracking</button>
+  <button (click)='stop()'>Stop Tracking</button>
+  <p>Location: {{locationTracker.lat}}, {{locationTracker.lng}}...{{ locationTracker.status }}</p>
+  <p>You are in {{ room }}</p>
+  <p>Distance from room: {{ locationTracker.distance }}</p> -->
 <!-- SVG DESIGN START -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
    viewBox="0 0 568.5 73.5" enable-background="new 0 0 568.5 73.5" xml:space="preserve">
@@ -31,6 +36,7 @@
 <!-- SVG DESIGN END -->
 <br>
 <br>
+<button (click)="changeMoveValue()">Update People in Moves</button>
 	<ion-list>
 		<ion-item no-lines class="animated fadeInUp" *ngFor="let move of system.moves" (click)="checkStats(move)" (press)="system.moveOptionsScreen(move)">
     <ion-icon item-right id="container" class="container" #container></ion-icon>

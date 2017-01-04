@@ -1,12 +1,16 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
+
+import { MovesService } from '../services/MovesService';
+import { System } from '../functions/functions';
 
 declare var ProgressBar: any;
 
 @Component({
   selector: 'page-stats',
-  templateUrl: 'stats.html'
+  templateUrl: 'stats.html',
+  providers: [MovesService, System]
 })
 
 
@@ -14,6 +18,7 @@ declare var ProgressBar: any;
 export class StatsPage {
 	@ViewChild('containerbig') container;
 	move:any;
+  progbar:any;
   percentage:any;
 	alcStatus = "No.";
   numppl = 0;
@@ -22,15 +27,33 @@ export class StatsPage {
 		this.createProgBar(this.container, this.move);
 	}
 
-  constructor(public navCtrl: NavController, public params: NavParams) {
+  ngOnChanges() {
+    this.percentage = (100*(this.move.stats.people/this.move.info.capacity)).toFixed(2); 
+  }
+
+  constructor(public navCtrl: NavController, public params: NavParams, public system: System, public zone: NgZone) {
  		this.move = params.get("firstPassed");
  		if (this.move.info.hasAlcohol) {
  			this.alcStatus = "Yes.";
  		}
-     this.percentage = (100*(this.move.stats.people/this.move.info.capacity)).toFixed(2);
+        this.percentage = (100*(this.move.stats.people/this.move.info.capacity)).toFixed(2);      
+
+
+     this.runUpdateProgBar();
   }
 
-  
+  runUpdateProgBar() {
+      setInterval(() => {
+        this.updateProgBar();       
+    }, 2000);    
+  }
+  updateProgBar() {
+    var index = 0;
+    console.log('Index is',0);
+    var value = this.move.stats.people/this.move.info.capacity;
+    this.progbar.animate(value);
+  }
+
   createProgBar(moves_container, move) {
         console.log("Executing createProgbar...");
         var progbar = new ProgressBar.SemiCircle(moves_container.nativeElement, {
@@ -72,6 +95,8 @@ export class StatsPage {
     } else {
       progbar.animate(0);
     }
+
+    this.progbar = progbar;
 
   }
 
