@@ -6,6 +6,7 @@ import { MakePage } from '../pages/make/make';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ProfilePage } from '../pages/profile/profile'
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { TabsPage } from '../pages/tabs/tabs';
     MakePage,
     HomePage,
     LoginPage,
+    ProfilePage,
     TabsPage
   ],
   imports: [
@@ -29,6 +31,7 @@ import { TabsPage } from '../pages/tabs/tabs';
     MakePage,
     HomePage,
     LoginPage,
+    ProfilePage,
     TabsPage
   ],
   providers: []

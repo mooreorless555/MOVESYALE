@@ -1,7 +1,10 @@
 import { Component, ViewChildren } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { NativeStorage } from 'ionic-native';
+
 import { StatsPage } from '../stats/stats';
+import { ProfilePage } from '../profile/profile';
 
 import { MovesService } from '../services/MovesService';
 import { System } from '../functions/functions';
@@ -24,7 +27,10 @@ export class HomePage {
   /* Lists all the moves after the page has fully loaded. 
   This is to allow @ViewChildren to work properly. */
   ngAfterViewInit() {
-    this.system.listMoves();
+    //this.system.listMoves();
+
+    this.listMoves();
+
   }
 
   /* Upon any change, will update the progress bars. */
@@ -39,16 +45,40 @@ export class HomePage {
     }
     }
 
-  constructor(public navCtrl: NavController, private system: System) {
+  constructor(public navCtrl: NavController, public system: System, public movesService:MovesService) {
 
   }
+
+  goToProfile() {
+    this.navCtrl.push(ProfilePage);
+  }
+
+
+  listMoves() {
+    var me = this;
+
+    NativeStorage.getItem('user')
+          .then(function(user) {
+            //alert("Got token: " + user.token);
+            return Promise.all([user, me.movesService.getMoves(user.token)]);
+          })
+          .then(function(results) {
+            //alert(results[1]);
+            me.moves = results[1];
+            //alert("Got moves: " + me.moves);
+          })
+          .catch(function(err) {
+            alert("Couldn't get tokens " + err);
+          });
+  }
+
 
   /* Refresh list of moves event. */
   refreshMoves(refresher) {
         this.system.showNotification('Updating list, standby...', 1000);
         setTimeout(() => {
           this.system.checked = 0;  
-          this.system.listMoves();  
+          this.listMoves();  
           this.system.showNotification('Done!', 1000);
           refresher.complete();
     }, 1000);

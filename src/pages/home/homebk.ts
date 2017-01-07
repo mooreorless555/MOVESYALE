@@ -1,3 +1,4 @@
+/*
 import { Component, ElementRef, ViewChildren } from '@angular/core';
 // import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
@@ -116,3 +117,4 @@ export class HomePage {
   }
 
 }
+*/

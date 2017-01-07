@@ -135,16 +135,15 @@ export class MakePage {
    }
 
     saveMove(move) {
-      this.movesService.makeMove(move).subscribe(
-        data => {
-          //this.moves = data;
-          console.log(move);
-        },
-        err => {
-          console.log(err);
-        },
-        () => console.log('Got Moves')
-      );
+      this.movesService.makeMove(move).then((result) => {
+
+         console.log("Move Created");
+
+      }, (err) => {
+
+        console.log("Move Not Created");
+
+      });
     }
 
 }

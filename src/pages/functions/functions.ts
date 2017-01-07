@@ -11,13 +11,13 @@ declare var ProgressBar: any;
 export class System {
 
 	public checked = 0;
-	public moves: Array<any>;
+	public moves: any;
 
 	constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private movesService: MovesService) {
 
-  	}
+  }
 
-showNotification(msg, duration) {
+  showNotification(msg, duration) {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: duration
@@ -25,57 +25,66 @@ showNotification(msg, duration) {
     toast.present();
   }  	
 
-startLoading(msg, duration) {
-	let loader = this.loadingCtrl.create({
-	  content: msg,
-	  duration: duration
-	});
-	loader.present();
-}
-
-moveOptionsScreen(move) {
-      let confirm = this.alertCtrl.create({
-            message: 'Are you sure want to delete "' + move.info.name + '"?',
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: data => {
-          console.log('Cancel clicked');
-        }},
-        {
-        text: 'Yes',
-        handler: data => {
-          this.deleteMove(move);
-        }}]
-        });
-          confirm.present();
-        }
-
-  listMoves() {
-    this.movesService.getMoves().subscribe(
-      data => {
-        this.moves = data;
-        console.log(this.moves);
-        this.moves.sort(this.sortDescending);
-      },
-      err => {
-        console.log(err);
-      },
-      () => console.log('Got Moves')
-    );
+  startLoading(msg, duration) {
+	 let loader = this.loadingCtrl.create({
+	   content: msg,
+	   duration: duration
+	 });
+	 loader.present();
   }
 
+  moveOptionsScreen(move) {
+    let confirm = this.alertCtrl.create({
+      message: 'Are you sure want to delete "' + move.info.name + '"?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: data => {
+            this.deleteMove(move);
+          }
+        }
+      ]
+    });
+    
+    confirm.present();
+  }
+
+  /*
+  listMoves() {
+    this.movesService.getMoves().then((data) => {
+
+      this.moves = data;
+
+    }, (err) => {
+
+      console.log(err);
+
+    });
+  }
+  */
+
 deleteMove(move) {
-    this.movesService.deleteMove(move).subscribe(
-      err => {
-        console.log(err);
-      }
-    )
+    this.movesService.deleteMove(move).then((result) => {
+
+      console.log("Deleted")
+
+    }, (err) => {
+
+      console.log(err);
+
+    });
+
+
     this.startLoading('Deleting move, standby...', 1000);
     setTimeout(() => {
         this.checked = 0;   
-        this.listMoves();  
         this.showNotification('Move has been deleted.', 1000);
     }, 1000);    
   }

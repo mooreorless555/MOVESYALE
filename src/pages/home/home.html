@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color='navbar'>
-    <ion-title item-center>Map</ion-title>
+    <ion-title item-center>Map <ion-icon name="contact" (click)="goToProfile()"></ion-icon></ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
@@ -13,7 +13,7 @@
     </ion-refresher-content>
   </ion-refresher>
 	<ion-list>
-		<ion-item no-lines class="animated fadeInUp" *ngFor="let move of system.moves" (click)="checkStats(move)" (press)="system.moveOptionsScreen(move)">
+		<ion-item no-lines class="animated fadeInUp" *ngFor="let move of moves" (click)="checkStats(move)" (press)="system.moveOptionsScreen(move)">
     <ion-icon item-right id="container" class="container" #container></ion-icon>
 			<h1 (swipe)="checkStats(move)" (press)="system.showNotification('Hey', 3000)" class="cutoff">{{move.info.name}}</h1>
 			<p class="item-description animated fadeInLeft">{{move.info.extraInfo}}</p>
