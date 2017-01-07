@@ -7,6 +7,7 @@ import { LocationTracker } from '../../providers/location-tracker';
 import { MovesService } from '../services/MovesService';
 import { System } from '../functions/functions';
 
+declare var ProgressBar: any;
 
 @Component({
   selector: 'page-home',
@@ -27,6 +28,7 @@ export class HomePage {
     this.system.listMoves();
   }
 
+
   room:any;
   interval:any;
 
@@ -45,16 +47,31 @@ export class HomePage {
     }
 
   constructor(public navCtrl: NavController, public system: System, public locationTracker: LocationTracker, public zone: NgZone) {
-
+    // clearInterval(this.system.stat_updates);
   }
 
+  showRating(move, rating) {
+    let max = Math.max(move.stats.fun, move.stats.meh, move.stats.dead);
+    if (max == 0) return false;
 
-  // runUpdateProgbars() {
-  //   this.zone.run(() => {
-  //     this.updateProgbars();
-  //   });
-  // }
+    if (rating == 'fun') {
+      if (move.stats.fun == max) {
+        return true;
+      }
+    } else if (rating == 'meh') {
+      if (move.stats.meh == max) {
+        return true;
+      }
+    } else if (rating == 'dead') {
+      if (move.stats.dead == max) {
+        return true;
+      }
+    }
 
+      return false;
+  }
+
+  /* Temporary: update progress bars to simulate real-time changes */
   changeMoveValue() {
     if (this.interval) {
       this.interval = undefined;
@@ -69,9 +86,9 @@ export class HomePage {
         this.system.updateProgbars();
       }, 1000);        
     }, 4000);
-    // }
   }
 
+  /* GPS Tracking */
   start() {
       this.system.showNotification("Tracking started.", 1000);
       this.locationTracker.startTracking();
@@ -81,6 +98,7 @@ export class HomePage {
       this.system.showNotification("Tracking stopped.", 1000);
       this.locationTracker.stopTracking();
   }
+  /*              */
 
   /* Refresh list of moves event. */
   refreshMoves(refresher) {

@@ -1,0 +1,162 @@
+.space {
+  margin-top: 150px;
+}
+
+.minispace {
+  margin-top: 50px;
+}
+
+.centerme {
+  margin: auto;
+  width: 150px;
+}
+
+.centertext {
+  text-align: center;
+}
+
+.largetext {
+  font-size: 5rem;
+}
+
+.mediumtext {
+  font-size: 3rem;
+}
+
+.custom-spinner {
+  width: auto;
+  height: 80px !important;
+}
+
+.cutoff {
+  text-overflow: ellipsis;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.nomoves {
+  margin: auto;
+  width: 80%;
+}
+
+.lessmargin {
+  margin-bottom: -20px;
+}
+
+.lessmargin-up {
+  margin-top: -20px;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+#container {
+  margin: auto;
+  width: 90px;
+  height: 90px;
+}
+
+#containerbig {
+  margin: auto;
+  width: 200px;
+  height: 100px;
+}
+
+#linebar {
+  margin: auto;
+  width: 200px;
+  height: 15px;
+}
+
+#linebar_small {
+  margin: auto;
+  width: 90px;
+  height: 9px;
+}
+
+.path {
+  stroke-dasharray: 400;
+  animation: dash 5s linear infinite;
+}
+
+.border {
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 7px;
+}
+
+.button_sliding_bg {
+  margin-left: -5px  !important;
+  margin-right: -5px !important;
+  /*	float: left !important;*/
+  color: #31302B;
+  background: #FFF;
+  padding: 20px 20px;
+  font-family: 'ButtonFont' !important;
+  border: 3px solid #31302B;
+  font-size: 35px;
+  /*    font-weight: bold;*/
+  letter-spacing: 1px;
+  border-radius: 3px;
+  display: inline;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: inset 0 10px 0 0 #31302B;
+  -webkit-transition: all ease 0.4s;
+  -moz-transition: all ease 0.4s;
+  transition: all ease 0.4s;
+  &.lit {
+    color: #FFF;
+    background: #b42ea1;
+    box-shadow: inset 0 10px 0 0 #ea4700;
+    &:active {
+      box-shadow: inset 0 100px 0 0 #ea4700;
+    }
+  }
+  &.meh {
+    color: #FFF;
+    background: #982eb4;
+    box-shadow: inset 0 10px 0 0 #7cff00;
+    &:active {
+      box-shadow: inset 0 100px 0 0 #7cff00;
+    }
+  }
+  &.dead {
+    color: #FFF;
+    background: #752aa9;
+    box-shadow: inset 0 10px 0 0 #477496;
+    &:active {
+      box-shadow: inset 0 100px 0 0 #477496;
+    }
+  }
+  &:hover {
+    box-shadow: inset 0 10px 0 0;
+  }
+  &:active {
+    color: #FFF;
+  }
+}
+
+.move_sliding_bg {
+  box-shadow: inset 0 100px 0 0 #31302B;
+  -webkit-transition: all ease 0.8s;
+  -moz-transition: all ease 0.8s;
+  transition: all ease 0.8s;
+  &:active {
+    box-shadow: inset 0 0 0 0 #31302B;
+  }
+}
+
+.statbox {
+  border: 2px white;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 800;
+  }
+}

@@ -8,7 +8,7 @@
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/ #886aea
 
 $text-color:        #fff;
 $background-color:  #222;
@@ -28,9 +28,11 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  navbar:	  #886aea,
+  navbar:	  #9932CC,
+  tabbar:	  #886aea,
   facebook:   #3B5998
 );
+
 
 @font-face {
 font-family: AppFont;
@@ -50,6 +52,11 @@ src: url("../assets/fonts/BebasNeue-Bold.ttf");
 @font-face {
 font-family: MoveHeader;
 src: url("../assets/fonts/DINPro-BlackItalic.otf");
+}
+
+@font-face {
+font-family: ButtonFont;
+src: url("../assets/fonts/Lobster-Regular.ttf");
 }
 
 

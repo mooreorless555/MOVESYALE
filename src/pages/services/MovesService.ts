@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-var url = 'http://localhost:3000/';
+var url = 'http://54.175.164.247:80/';
 
 @Injectable()
 export class MovesService {
@@ -37,7 +37,7 @@ export class MovesService {
   deleteMove(move) {
     console.log('Deleting move');
     console.log(move);
-    let url = 'http://localhost:3000' + '/moves/' + move._id;
+    let url = 'http://54.175.164.247:80' + '/moves/' + move._id;
     var response = this.http.delete(url).map(res => res.json());
     this.getMoves();
     return response;

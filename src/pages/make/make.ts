@@ -34,7 +34,10 @@ export class MakePage {
     },
 
     stats: {
-      people: 1
+      people: 1,
+      fun: 0,
+      meh: 0,
+      dead: 0
     }
   }
 
@@ -107,7 +110,12 @@ export class MakePage {
         text: 'GO LIVE!',
         handler: data => {
           this.move.stats.people = Math.floor(Math.random() * this.move.info.capacity);
-          this.saveMove(this.move);
+          this.move.stats.fun = Math.floor(Math.random() * this.move.info.capacity);
+          this.move.stats.meh = Math.floor(Math.random() * this.move.info.capacity);
+          this.move.stats.dead = Math.floor(Math.random() * this.move.info.capacity);
+
+
+          this.system.saveMove(this.move);
           this.system.startLoading("Adding your move to the map.", 1000);
           setTimeout(() => {
             this.system.showNotification("Your move is now on the map. Check it out!", 1000);
@@ -134,17 +142,5 @@ export class MakePage {
      }
    }
 
-    saveMove(move) {
-      this.movesService.makeMove(move).subscribe(
-        data => {
-          //this.moves = data;
-          console.log(move);
-        },
-        err => {
-          console.log(err);
-        },
-        () => console.log('Got Moves')
-      );
-    }
 
 }

@@ -21,7 +21,6 @@
 <!--   <button (click)='start()'>Start Tracking</button>
   <button (click)='stop()'>Stop Tracking</button>
   <p>Location: {{locationTracker.lat}}, {{locationTracker.lng}}...{{ locationTracker.status }}</p>
-  <p>You are in {{ room }}</p>
   <p>Distance from room: {{ locationTracker.distance }}</p> -->
 <!-- SVG DESIGN START -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -39,8 +38,15 @@
 <button (click)="changeMoveValue()">Update People in Moves</button>
 	<ion-list>
 		<ion-item no-lines class="animated fadeInUp" *ngFor="let move of system.moves" (click)="checkStats(move)" (press)="system.moveOptionsScreen(move)">
-    <ion-icon item-right id="container" class="container" #container></ion-icon>
-			<h1 (swipe)="checkStats(move)" (press)="system.showNotification('Hey', 3000)" class="cutoff movetext">{{move.info.name}}</h1>
+    <ion-icon item-right>
+     <div id="container" class="container" #container></div>
+
+    </ion-icon>
+			<h1 class="cutoff movetext">
+        <ion-icon class='only-fun-color small-font' *ngIf="showRating(move, 'fun')" name="bookmark"></ion-icon>
+        <ion-icon class='only-meh-color small-font' *ngIf="showRating(move, 'meh')" name="bookmark"></ion-icon>
+        <ion-icon class='only-dead-color small-font' *ngIf="showRating(move, 'dead')" name="bookmark"></ion-icon>
+         {{move.info.name}}</h1>
 			<p class="item-description animated fadeInLeft">{{move.info.extraInfo}}</p>
       <p><i>Hosted by FACEBOOK_USER_ID</i></p>
 		</ion-item>

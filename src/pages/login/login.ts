@@ -37,7 +37,8 @@ presentPrompt() {
     inputs: [
       {
         name: 'email',
-        placeholder: 'Yale Email'
+        placeholder: 'Yale Email',
+        value: 'me@yale.edu'
       }
     ],
     buttons: [

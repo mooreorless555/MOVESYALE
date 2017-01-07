@@ -1,3 +1,7 @@
+/* This is the main functions file. It contains functions that
+can control the database. */
+
+
 
 import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
@@ -17,6 +21,8 @@ export class System {
 
 	public currentdate = this.showDate();
 	public currentday = this.showDay();
+
+  public stat_updates = null;
 
 	constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private movesService: MovesService) {
 
@@ -85,6 +91,21 @@ deleteMove(move) {
         this.showNotification('Move has been deleted.', 1000);
     }, 1000);    
   }
+
+  saveMove(move) {
+    this.movesService.makeMove(move).subscribe(
+      data => {
+        // this.moves = data;
+        console.log(move);
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Got Moves')
+    );
+  }
+
+
 
 createProgBars(moves_containers, moves) {
   console.log("Hi there");
