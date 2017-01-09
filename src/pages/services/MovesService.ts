@@ -15,10 +15,26 @@ export class MovesService {
     console.log('Hello MovesService Provider');
   }
 
-  getMoves() {
-    console.log('Getting Moves');
-    var response = this.http.get(url).map(res => res.json());
-    return response;
+  getMoves(token) {
+
+    var headers = new Headers({ 'Authorization': token.token });
+
+    return new Promise((resolve, reject) => {
+      
+      this.http.get(url, {headers: headers})
+      .map(res => res.json())
+      .subscribe(data => {
+        //alert(data);
+        resolve(data);
+
+      }, (err) => {
+        //alert(err);
+        reject(err);
+      
+      });
+    
+    });
+
   }
 
   makeMove(move) {
@@ -29,17 +45,43 @@ export class MovesService {
     console.log(body);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    
-    var response = this.http.post(url, body, options).map(res => res.json());
-    return response;
+
+    return new Promise((resolve, reject) => {
+
+      this.http.post(url, body, options).subscribe(res => {
+
+        let data = res.json();
+        resolve(data);
+
+      }, (err) => {
+
+        reject(err);
+
+      });
+
+    });
   }
 
   deleteMove(move) {
+    
     console.log('Deleting move');
     console.log(move);
-    let url = 'http://54.175.164.247:80' + '/moves/' + move._id;
-    var response = this.http.delete(url).map(res => res.json());
-    this.getMoves();
-    return response;
+    let urlDelete = url + 'moves/' + move._id;
+
+    return new Promise((resolve, reject) => {
+
+      this.http.delete(urlDelete)
+      .subscribe(res => {
+
+        let data = res.json();
+        resolve(data);
+
+      }, (err) => {
+
+        reject(err);
+
+      });
+
+    });
   }
 }

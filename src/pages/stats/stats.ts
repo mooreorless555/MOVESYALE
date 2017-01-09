@@ -71,7 +71,7 @@ incStat(move, stat) {
     default:
       console.log('Mistake.');
  }
-  this.system.saveMove(move);
+  // this.system.saveMove(move);
   this.updateStatsBars();
 }
 

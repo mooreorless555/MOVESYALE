@@ -129,6 +129,7 @@ app.post('/api/FBauthenticate', function(req, res) {
 				console.log("New user: " + newUser);
 				
 				var token = jwt.encode(newUser, config.secret);
+				console.log("token: " + token);
 				res.json({success: true, msg: 'Successful created new user.', token: 'JWT ' + token});
 			});
 
@@ -138,6 +139,7 @@ app.post('/api/FBauthenticate', function(req, res) {
 			}
 			console.log("found existing user: " + user);
 			var token = jwt.encode(user, config.secret);
+			console.log("token: " + token);
 			res.json({success: true, token: 'JWT ' + token});
 		}
 	});
@@ -197,34 +199,61 @@ passport.use(new FacebookStrategy({
     done(null, profile);
   });
 }));
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
 app.get('/auth/facebook', passport.authenticate('facebook'));
-
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/success',
   failureRedirect: '/error'
 }));
-
 app.get('/success', function(req, res, next) {
   res.send('Successfully logged in.');
 });
-
 app.get('/error', function(req, res, next) {
   res.send("Error logging in.");
 });
 */
 // Handlers
+
 app.route('/')
 	// GET all moves
 	.get(isLoggedIn, (req, res) => {
+		Move.find((err, moves) => {
+			if (err) return console.log(err);
+			console.log('[+] Moves fetched');
+			console.log(moves);
+			res.json(moves);
+		})
+		//res.sendFile(__dirname + '/index.html');
+	})
+	
+	.post((req, res) => {
+		//console.log(req)
+		console.log(req.body)
+		console.log(req.body.name)
+		Move.create(req.body, (err, post) => {
+			if (err) return console.log(err);
+			console.log('[+] Move created');
+			console.log(post);
+			res.json(post);
+			//res.redirect('/');
+		})
+	})
+
+	.delete((req, res) => {
+		db.collection('moves').findOneAndDelete({name: req.body.name}, (err, result) => {
+			if (err) return res.send(500, err)
+			res.send('Move deleted')
+		})
+	})
+
+app.route('/')
+	// GET all moves
+	.get((req, res) => {
 		Move.find((err, moves) => {
 			if (err) return console.log(err);
 			console.log('[+] Moves fetched');
@@ -279,4 +308,3 @@ app.route('/moves/:id')
 			console.log('Move deleted');
 		})
 	})
-

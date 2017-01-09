@@ -1,7 +1,11 @@
 import { Component, ViewChildren, NgZone } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { NativeStorage } from 'ionic-native';
+
 import { StatsPage } from '../stats/stats';
+import { ProfilePage } from '../profile/profile';
+
 import { LocationTracker } from '../../providers/location-tracker';
 
 import { MovesService } from '../services/MovesService';
@@ -25,7 +29,8 @@ export class HomePage {
   /* Lists all the moves after the page has fully loaded. 
   This is to allow @ViewChildren to work properly. */
   ngAfterViewInit() {
-    this.system.listMoves();
+    this.listMoves();
+
   }
 
 
@@ -46,8 +51,9 @@ export class HomePage {
     }
     }
 
-  constructor(public navCtrl: NavController, public system: System, public locationTracker: LocationTracker, public zone: NgZone) {
-    // clearInterval(this.system.stat_updates);
+
+  constructor(public navCtrl: NavController, public system: System, public locationTracker: LocationTracker, public movesService: MovesService, public zone: NgZone) {
+
   }
 
   showRating(move, rating) {
@@ -98,7 +104,32 @@ export class HomePage {
       this.system.showNotification("Tracking stopped.", 1000);
       this.locationTracker.stopTracking();
   }
-  /*              */
+
+  goToProfile() {
+    this.navCtrl.push(ProfilePage);
+  }
+
+
+  listMoves() {
+    var me = this;
+
+    NativeStorage.getItem('user')
+          .then(function(user) {
+            //alert("Got token: " + user.token);
+            return Promise.all([user, me.movesService.getMoves(user.token)]);
+          })
+          .then(function(results) {
+            //alert(results[1]);
+            me.moves = results[1];
+            //alert("Got moves: " + me.moves);
+          })
+          .catch(function(err) {
+            alert("Couldn't get tokens " + err);
+          });
+
+
+  }
+
 
   /* Refresh list of moves event. */
   refreshMoves(refresher) {
@@ -106,9 +137,9 @@ export class HomePage {
         this.system.progbars = [];
         setTimeout(() => {
           this.system.checked = 0;  
-          this.system.listMoves();
           this.system.currentdate = this.system.showDate();
           this.system.currentday = this.system.showDay();  
+          this.listMoves();  
           this.system.showNotification('Done!', 1000);
           refresher.complete();
     }, 1000);

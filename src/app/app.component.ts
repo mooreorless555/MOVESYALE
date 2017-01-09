@@ -1,59 +1,44 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen, Geofence } from 'ionic-native';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
+import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
 
 // import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 
 
 @Component({
   template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = LoginPage;
+  
+  @ViewChild(Nav) nav: Nav;
+
+  rootPage: any;
 
   constructor(platform: Platform) {
+    
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      // StatusBar.styleDefault();
+
+      // Check if the user is already logged in
+      let env = this;
+  
+      NativeStorage.getItem('user')
+      .then((data) => {
+        //alert("Got tokens" + data);
+        // user was previously logged in
+        env.nav.push(HomePage);
+        Splashscreen.hide();
+      }, (err) => {
+        //alert('No user found');
+        // user not previously logged in
+        env.nav.push(LoginPage)
+        Splashscreen.hide();
+      });
+
       StatusBar.backgroundColorByHexString("#9932CC");
-      Splashscreen.show();
-      setTimeout(function() {
-          Splashscreen.hide();
-      }, 2000);
     });
- Geofence.initialize().then(
-        // resolved promise does not return a value
-        () => console.log('Geofence Plugin Ready'),
-        (err) => console.log(err)
-      )
-
-  this.addGeofence();
-    // ScreenOrientation.lockOrientation('portrait');
   }
-
-
-private addGeofence() {
-  //options describing geofence
-  let fence = {
-    id: "69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb", //any unique ID
-    latitude:       40.9407244999, //center of geofence radius
-    longitude:      -73.73012159999,
-    radius:         100, //radius to edge of geofence
-    transitionType: 3, //see 'Transition Types' below
-    notification: { //notification settings
-        id:             1, //any unique ID
-        title:          "You crossed a fence", //notification title
-        text:           "You just arrived to Gliwice city center.", //notification body
-        openAppOnClick: true //open app when notification is tapped
-    }
-  }
-
-  Geofence.addOrUpdate(fence).then(
-     () => console.log('Geofence added'),
-     (err) => console.log('Geofence failed to add')
-   );
-}
-
 }

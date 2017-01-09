@@ -115,7 +115,7 @@ export class MakePage {
           this.move.stats.dead = Math.floor(Math.random() * this.move.info.capacity);
 
 
-          this.system.saveMove(this.move);
+          this.saveMove(this.move);
           this.system.startLoading("Adding your move to the map.", 1000);
           setTimeout(() => {
             this.system.showNotification("Your move is now on the map. Check it out!", 1000);
@@ -142,5 +142,17 @@ export class MakePage {
      }
    }
 
+
+    saveMove(move) {
+      this.movesService.makeMove(move).then((result) => {
+
+         console.log("Move Created");
+
+      }, (err) => {
+
+        console.log("Move Not Created");
+
+      });
+    }
 
 }

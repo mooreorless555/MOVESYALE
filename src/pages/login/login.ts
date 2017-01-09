@@ -1,16 +1,30 @@
 import { Component } from '@angular/core';
 
+import { Facebook, NativeStorage } from 'ionic-native';
+
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 
+import { LoginProvider } from '../../providers/login-provider';
+
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+
 import { TabsPage } from '../tabs/tabs';
+import { HomePage } from '../home/home';
+
+
+//var url = 'http://54.175.164.247:80/';
 
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
+  providers: [LoginProvider]
 })
 export class LoginPage {
+  FB_APP_ID: number = 1726230761032513;
+
   public info = "By Yalies. For Yalies.";
 
   public firsttime = {
@@ -18,7 +32,48 @@ export class LoginPage {
     confirmcode: ""
   };
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public loginProvider: LoginProvider, public http:Http, public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+    Facebook.browserInit(this.FB_APP_ID, "v2.8");
+  }
+
+  doLogin() {
+    var me = this;
+    var permissions = new Array();
+
+    permissions = ["public_profile", "email"];
+
+    Facebook.login(permissions)
+      .then(function(res) {
+
+        //let userId = res.authResponse.userID;
+        //let social_token = res.authResponse.accessToken;
+        let params = new Array();
+
+        //alert(response.authResponse.accessToken);
+        return Promise.all([res, Facebook.api("/me?fields=name,email", params)]);
+      
+      })
+      .then(function(results) {
+        //alert(results);
+        //alert(results[0]);
+        //alert("Results: " + results[1] + " name: " + results[1].name);
+        //alert(results[1].name);
+
+        return Promise.all([results, me.loginProvider.doApiLogin(results)])
+
+
+      })
+      .then(function(results) {
+        NativeStorage.setItem('user', {
+          social_token: results[0][0],
+          token: results[1]
+        })
+
+        me.navCtrl.setRoot(HomePage);
+      })
+      .catch(function(error) {
+        alert("Error in doLogin(): " + error);
+      });
 
   }
 
